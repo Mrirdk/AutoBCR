@@ -1,4 +1,4 @@
-name: Build AutoRobot Baccarat V7 Pro APK
+name: Build AutoBCR APK
 
 on:
   push:
@@ -37,14 +37,18 @@ jobs:
           cd "$PROJECT_DIR"
           gradle assembleDebug --no-daemon --stacktrace
 
-      - name: Package AutoRobot-Baccarat-V7-Pro.apk
+      - name: Package AutoBCR.apk
         run: |
           mkdir -p dist
-          APK_PATH=$(find . -name "app-debug.apk" | head -n 1)
-          cp "$APK_PATH" dist/AutoRobot-Baccarat-V7-Pro.apk
+          APK_PATH=$(find . -path "*/build/outputs/apk/debug/*.apk" | head -n 1)
+          if [ -z "$APK_PATH" ]; then
+            echo "ERROR: Khong tim thay file APK sau khi build!"
+            exit 1
+          fi
+          cp "$APK_PATH" dist/AutoBCR.apk
 
-      - name: Upload V7 Pro APK
+      - name: Upload AutoBCR APK
         uses: actions/upload-artifact@v4
         with:
-          name: AutoRobot-Baccarat-V7-Pro-APK
-          path: dist/AutoRobot-Baccarat-V7-Pro.apk
+          name: AutoBCR
+          path: dist/AutoBCR.apk
