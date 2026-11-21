@@ -402,8 +402,7 @@ class AutoRobotOverlayService : Service() {
             tvResultAnnouncement.text = "ĐÃ LÀM MỚI DỮ LIỆU BÀN MỚI"
             tvRobotStatus.text = "Sẵn sàng tính xác suất bàn mới!"
             tvMainRoadStatus.text = "Nhịp cột: Đang chờ dữ liệu..."
-            tvMarkovProb.text = "CÁI: 50.7%
-CON: 49.3%"
+            tvMarkovProb.text = "CÁI: 50.7%\nCON: 49.3%"
             tvRecentBeads.text = "Chuỗi bắt được: --"
             playChimeAndVibrate(isAlert = false)
         }
@@ -748,7 +747,7 @@ CON: 49.3%"
                     }
                 }
 
-                val totalMatch = Regex("TOTAL\s*[:\-]?\s*(\d{1,3})").find(rawText)
+                val totalMatch = Regex("TOTAL\\s*[:\\-]?\\s*(\\d{1,3})").find(rawText)
                 if (totalMatch != null) {
                     val totalVal = totalMatch.groupValues[1].toIntOrNull() ?: -1
                     if (totalVal > 0) {
@@ -817,13 +816,11 @@ CON: 49.3%"
 
         val bStr = String.format(Locale.US, "%.1f", report.probBPercent)
         val pStr = String.format(Locale.US, "%.1f", report.probPPercent)
-        tvMarkovProb.text = "CÁI: $bStr%
-CON: $pStr%"
+        tvMarkovProb.text = "CÁI: $bStr%\nCON: $pStr%"
         tvHitMissStats.text = "Chuẩn: $hitCount | Gãy: $missCount"
 
         tvRobotStatus.text = report.robotNoteText
-        tvMainRoadStatus.text = "${report.columnVectorText}
-${report.derivedRoadStatusText}"
+        tvMainRoadStatus.text = "${report.columnVectorText}\n${report.derivedRoadStatusText}"
 
         val recentStr = if (capturedHistory.isEmpty()) {
             "--"
